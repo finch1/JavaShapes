@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_labcourseworkone" default="compile.module.labcourseworkone">
+  <dirname property="module.labcourseworkone.basedir" file="${ant.file.module_labcourseworkone}"/>
+  
+  <property name="module.jdk.home.labcourseworkone" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.labcourseworkone" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.labcourseworkone" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.labcourseworkone" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="labcourseworkone.output.dir" value="${module.labcourseworkone.basedir}/out/production/LabCourseworkOne"/>
+  <property name="labcourseworkone.testoutput.dir" value="${module.labcourseworkone.basedir}/out/test/LabCourseworkOne"/>
+  
+  <path id="labcourseworkone.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="labcourseworkone.module.production.classpath">
+    <path refid="${module.jdk.classpath.labcourseworkone}"/>
+  </path>
+  
+  <path id="labcourseworkone.runtime.production.module.classpath">
+    <pathelement location="${labcourseworkone.output.dir}"/>
+  </path>
+  
+  <path id="labcourseworkone.module.classpath">
+    <path refid="${module.jdk.classpath.labcourseworkone}"/>
+    <pathelement location="${labcourseworkone.output.dir}"/>
+  </path>
+  
+  <path id="labcourseworkone.runtime.module.classpath">
+    <pathelement location="${labcourseworkone.testoutput.dir}"/>
+    <pathelement location="${labcourseworkone.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.labcourseworkone">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.labcourseworkone">
+    <patternset refid="excluded.from.module.labcourseworkone"/>
+  </patternset>
+  
+  <path id="labcourseworkone.module.sourcepath">
+    <dirset dir="${module.labcourseworkone.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.labcourseworkone" depends="compile.module.labcourseworkone.production,compile.module.labcourseworkone.tests" description="Compile module LabCourseworkOne"/>
+  
+  <target name="compile.module.labcourseworkone.production" depends="register.custom.compilers" description="Compile module LabCourseworkOne; production classes">
+    <mkdir dir="${labcourseworkone.output.dir}"/>
+    <javac2 destdir="${labcourseworkone.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.labcourseworkone}/javac">
+      <compilerarg line="${compiler.args.labcourseworkone}"/>
+      <bootclasspath refid="labcourseworkone.module.bootclasspath"/>
+      <classpath refid="labcourseworkone.module.production.classpath"/>
+      <src refid="labcourseworkone.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.labcourseworkone"/>
+    </javac2>
+    
+    <copy todir="${labcourseworkone.output.dir}">
+      <fileset dir="${module.labcourseworkone.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.labcourseworkone.tests" depends="register.custom.compilers,compile.module.labcourseworkone.production" description="compile module LabCourseworkOne; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.labcourseworkone" description="cleanup module">
+    <delete dir="${labcourseworkone.output.dir}"/>
+    <delete dir="${labcourseworkone.testoutput.dir}"/>
+  </target>
+</project>
