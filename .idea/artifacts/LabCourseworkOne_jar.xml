@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="LabCourseworkOne:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/LabCourseworkOne_jar</output-path>
-    <root id="archive" name="LabCourseworkOne.jar">
-      <element id="module-output" name="client" />
-    </root>
-  </artifact>
-</component>
